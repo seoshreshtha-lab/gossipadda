@@ -3,212 +3,216 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GossipAdda — Spill It. No Names.</title>
+<title>Gossip Adda</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+
+body{
+background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);
+color:white;
+min-height:100vh;
 }
 
-body {
-  background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-  color: white;
-  min-height: 100vh;
+.section{display:none;padding:40px 20px;max-width:900px;margin:auto;}
+.active{display:block;}
+
+.hero{
+text-align:center;
+margin-top:80px;
 }
 
-header {
-  text-align: center;
-  padding: 25px;
-  font-size: 26px;
-  font-weight: 700;
-  letter-spacing: 1px;
+.hero h1{
+font-size:52px;
+font-weight:700;
 }
 
-.container {
-  max-width: 700px;
-  margin: auto;
-  padding: 20px;
+.hero p{
+margin-top:15px;
+opacity:0.8;
 }
 
-.card {
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(20px);
-  border-radius: 20px;
-  padding: 20px;
-  margin-bottom: 20px;
-  transition: 0.3s ease;
+button{
+padding:12px 20px;
+border:none;
+border-radius:12px;
+cursor:pointer;
+font-weight:600;
+margin-top:20px;
+background:linear-gradient(135deg,#ff2d95,#ff6a00);
+color:white;
 }
 
-.card:hover {
-  transform: translateY(-3px);
+.category-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:20px;
+margin-top:40px;
 }
 
-textarea {
-  width: 100%;
-  height: 90px;
-  padding: 12px;
-  border-radius: 15px;
-  border: none;
-  resize: none;
-  outline: none;
-  font-size: 14px;
+.card{
+background:rgba(255,255,255,0.08);
+backdrop-filter:blur(20px);
+padding:20px;
+border-radius:20px;
+cursor:pointer;
+transition:0.3s;
 }
 
-select {
-  width: 100%;
-  padding: 10px;
-  margin-top: 10px;
-  border-radius: 12px;
-  border: none;
+.card:hover{
+transform:translateY(-5px);
 }
 
-button {
-  width: 100%;
-  padding: 12px;
-  margin-top: 12px;
-  border-radius: 15px;
-  border: none;
-  font-weight: 600;
-  font-size: 14px;
-  cursor: pointer;
-  background: linear-gradient(135deg, #ff2d95, #ff6a00);
-  color: white;
-  transition: 0.3s;
+textarea{
+width:100%;
+height:90px;
+padding:12px;
+border-radius:12px;
+border:none;
+margin-top:15px;
+resize:none;
 }
 
-button:hover {
-  opacity: 0.85;
+.post{
+background:rgba(255,255,255,0.07);
+padding:15px;
+border-radius:15px;
+margin-top:15px;
 }
 
-.post {
-  background: rgba(255, 255, 255, 0.07);
-  border-radius: 18px;
-  padding: 18px;
-  margin-top: 15px;
+.small-btn{
+background:none;
+border:1px solid rgba(255,255,255,0.3);
+padding:6px 10px;
+margin-left:10px;
+font-size:12px;
 }
 
-.category {
-  font-size: 12px;
-  opacity: 0.7;
-  margin-bottom: 6px;
+.top-nav{
+position:fixed;
+top:20px;
+right:20px;
 }
 
-.post p {
-  margin: 10px 0;
-  line-height: 1.5;
-}
-
-.reactions span {
-  cursor: pointer;
-  margin-right: 15px;
-  font-size: 18px;
-  transition: 0.2s;
-}
-
-.reactions span:hover {
-  transform: scale(1.2);
-}
-
-.footer {
-  text-align: center;
-  padding: 20px;
-  font-size: 12px;
-  opacity: 0.6;
+.report-box{
+margin-top:30px;
+opacity:0.7;
+font-size:13px;
+cursor:pointer;
 }
 </style>
 </head>
 
 <body>
 
-<header>💬 GossipAdda</header>
-
-<div class="container">
-
-  <div class="card">
-    <h3>Spill it. No names. No judgement.</h3>
-
-    <textarea id="postInput" placeholder="What's the tea? ☕"></textarea>
-
-    <select id="category">
-      <option>🔥 Random</option>
-      <option>🎓 College</option>
-      <option>💼 Office</option>
-      <option>💔 Situationship</option>
-      <option>🧠 Overthinking</option>
-    </select>
-
-    <button onclick="addPost()">Post Anonymously</button>
-  </div>
-
-  <div id="posts"></div>
-
+<div class="top-nav">
+<button onclick="showSection('home')">Home</button>
 </div>
 
-<div class="footer">
-  🚫 No real names. Keep it respectful.
+<!-- HOME -->
+<div id="home" class="section active">
+<div class="hero">
+<h1>Gossip Adda</h1>
+<h3>Spill it. No names. No judgement.</h3>
+<p>A safe anonymous space to drop your tea, overthink loudly, and vent freely.</p>
+<button onclick="showSection('categories')">Get Started</button>
+
+<div class="report-box" onclick="alert('Feature coming soon: Raise a concern form')">
+🚩 Raise a Concern / Report Chat
+</div>
+</div>
+</div>
+
+<!-- CATEGORIES -->
+<div id="categories" class="section">
+<h2>Select a Gossip Column</h2>
+
+<div class="category-grid">
+<div class="card" onclick="openRoom('Random Gossip')">🔥 Random Gossip</div>
+<div class="card" onclick="openRoom('College Gossip')">🎓 College Gossip</div>
+<div class="card" onclick="openRoom('Situationship')">💔 Situationship</div>
+<div class="card" onclick="openRoom('Am I Overthinking?')">🧠 Am I Overthinking?</div>
+</div>
+</div>
+
+<!-- ROOM -->
+<div id="room" class="section">
+<h2 id="roomTitle"></h2>
+
+<textarea id="gossipInput" placeholder="Drop your tea anonymously..."></textarea>
+<button onclick="postGossip()">Post</button>
+
+<div id="gossipFeed"></div>
 </div>
 
 <script>
-let posts = JSON.parse(localStorage.getItem("gossipPosts")) || [];
+let currentRoom = "";
+let data = JSON.parse(localStorage.getItem("gossipData")) || {};
 
-function savePosts() {
-  localStorage.setItem("gossipPosts", JSON.stringify(posts));
+function showSection(id){
+document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+document.getElementById(id).classList.add('active');
 }
 
-function addPost() {
-  let text = document.getElementById("postInput").value.trim();
-  let category = document.getElementById("category").value;
-
-  if (text === "") {
-    alert("Drop some tea first 👀");
-    return;
-  }
-
-  posts.unshift({
-    text,
-    category,
-    likes: 0,
-    laughs: 0,
-    fire: 0,
-    time: new Date().toLocaleString()
-  });
-
-  savePosts();
-  document.getElementById("postInput").value = "";
-  displayPosts();
+function openRoom(roomName){
+currentRoom = roomName;
+document.getElementById("roomTitle").innerText = roomName;
+showSection('room');
+renderPosts();
 }
 
-function react(index, type) {
-  posts[index][type]++;
-  savePosts();
-  displayPosts();
+function postGossip(){
+let text = document.getElementById("gossipInput").value.trim();
+if(text==="") return;
+
+if(!data[currentRoom]) data[currentRoom]=[];
+
+data[currentRoom].unshift({
+text:text,
+replies:[],
+time:new Date().toLocaleString()
+});
+
+localStorage.setItem("gossipData",JSON.stringify(data));
+document.getElementById("gossipInput").value="";
+renderPosts();
 }
 
-function displayPosts() {
-  let postsDiv = document.getElementById("posts");
-  postsDiv.innerHTML = "";
+function replyPost(index){
+let reply = prompt("Write anonymous reply:");
+if(!reply) return;
 
-  posts.forEach((post, index) => {
-    postsDiv.innerHTML += `
-      <div class="post">
-        <div class="category">${post.category} • ${post.time}</div>
-        <p>${post.text}</p>
-        <div class="reactions">
-          <span onclick="react(${index}, 'likes')">❤️ ${post.likes}</span>
-          <span onclick="react(${index}, 'laughs')">😂 ${post.laughs}</span>
-          <span onclick="react(${index}, 'fire')">🔥 ${post.fire}</span>
-        </div>
-      </div>
-    `;
-  });
+data[currentRoom][index].replies.push(reply);
+localStorage.setItem("gossipData",JSON.stringify(data));
+renderPosts();
 }
 
-displayPosts();
+function renderPosts(){
+let feed=document.getElementById("gossipFeed");
+feed.innerHTML="";
+
+if(!data[currentRoom]) return;
+
+data[currentRoom].forEach((post,index)=>{
+let html=`
+<div class="post">
+<p>${post.text}</p>
+<small>${post.time}</small>
+<br>
+<button class="small-btn" onclick="replyPost(${index})">Reply</button>
+<button class="small-btn" onclick="alert('Reported')">Report</button>
+`;
+
+post.replies.forEach(r=>{
+html+=`<div style="margin-top:8px;font-size:13px;opacity:0.8;">↳ ${r}</div>`;
+});
+
+html+=`</div>`;
+feed.innerHTML+=html;
+});
+}
 </script>
 
 </body>

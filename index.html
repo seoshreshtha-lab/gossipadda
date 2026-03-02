@@ -1,1 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GossipAdda — Spill It. No Names.</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+  color: white;
+  min-height: 100vh;
+}
+
+header {
+  text-align: center;
+  padding: 25px;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.container {
+  max-width: 700px;
+  margin: auto;
+  padding: 20px;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+  padding: 20px;
+  margin-bottom: 20px;
+  transition: 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+}
+
+textarea {
+  width: 100%;
+  height: 90px;
+  padding: 12px;
+  border-radius: 15px;
+  border: none;
+  resize: none;
+  outline: none;
+  font-size: 14px;
+}
+
+select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 12px;
+  border: none;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 12px;
+  border-radius: 15px;
+  border: none;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  background: linear-gradient(135deg, #ff2d95, #ff6a00);
+  color: white;
+  transition: 0.3s;
+}
+
+button:hover {
+  opacity: 0.85;
+}
+
+.post {
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: 18px;
+  padding: 18px;
+  margin-top: 15px;
+}
+
+.category {
+  font-size: 12px;
+  opacity: 0.7;
+  margin-bottom: 6px;
+}
+
+.post p {
+  margin: 10px 0;
+  line-height: 1.5;
+}
+
+.reactions span {
+  cursor: pointer;
+  margin-right: 15px;
+  font-size: 18px;
+  transition: 0.2s;
+}
+
+.reactions span:hover {
+  transform: scale(1.2);
+}
+
+.footer {
+  text-align: center;
+  padding: 20px;
+  font-size: 12px;
+  opacity: 0.6;
+}
+</style>
+</head>
+
+<body>
+
+<header>💬 GossipAdda</header>
+
+<div class="container">
+
+  <div class="card">
+    <h3>Spill it. No names. No judgement.</h3>
+
+    <textarea id="postInput" placeholder="What's the tea? ☕"></textarea>
+
+    <select id="category">
+      <option>🔥 Random</option>
+      <option>🎓 College</option>
+      <option>💼 Office</option>
+      <option>💔 Situationship</option>
+      <option>🧠 Overthinking</option>
+    </select>
+
+    <button onclick="addPost()">Post Anonymously</button>
+  </div>
+
+  <div id="posts"></div>
+
+</div>
+
+<div class="footer">
+  🚫 No real names. Keep it respectful.
+</div>
+
+<script>
+let posts = JSON.parse(localStorage.getItem("gossipPosts")) || [];
+
+function savePosts() {
+  localStorage.setItem("gossipPosts", JSON.stringify(posts));
+}
+
+function addPost() {
+  let text = document.getElementById("postInput").value.trim();
+  let category = document.getElementById("category").value;
+
+  if (text === "") {
+    alert("Drop some tea first 👀");
+    return;
+  }
+
+  posts.unshift({
+    text,
+    category,
+    likes: 0,
+    laughs: 0,
+    fire: 0,
+    time: new Date().toLocaleString()
+  });
+
+  savePosts();
+  document.getElementById("postInput").value = "";
+  displayPosts();
+}
+
+function react(index, type) {
+  posts[index][type]++;
+  savePosts();
+  displayPosts();
+}
+
+function displayPosts() {
+  let postsDiv = document.getElementById("posts");
+  postsDiv.innerHTML = "";
+
+  posts.forEach((post, index) => {
+    postsDiv.innerHTML += `
+      <div class="post">
+        <div class="category">${post.category} • ${post.time}</div>
+        <p>${post.text}</p>
+        <div class="reactions">
+          <span onclick="react(${index}, 'likes')">❤️ ${post.likes}</span>
+          <span onclick="react(${index}, 'laughs')">😂 ${post.laughs}</span>
+          <span onclick="react(${index}, 'fire')">🔥 ${post.fire}</span>
+        </div>
+      </div>
+    `;
+  });
+}
+
+displayPosts();
+</script>
+
+</body>
+</html>
